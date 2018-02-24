@@ -1,19 +1,25 @@
 package de.designpatterns.section2.observer;
 
 import de.designpatterns.section2.subject.WeatherData;
+import java.util.Observable;
+import java.util.Observer;
 
 public class HeatIndexDisplay implements Observer, DisplayElement {
+    private Observable observable;
     private float heatIndex = 0.0f;
-    private WeatherData weatherData;
 
-    public HeatIndexDisplay(WeatherData weatherData) {
-        this.weatherData = weatherData;
-        weatherData.registerObserver(this);
+    public HeatIndexDisplay(Observable observable) {
+        this.observable = observable;
+        observable.addObserver(this);
     }
 
-    public void update(float t, float rh, float pressure) {
-        heatIndex = computeHeatIndex(t, rh);
-        display();
+    @Override
+    public void update(Observable obs, Object args) {
+        if (obs instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) obs;
+            heatIndex = computeHeatIndex(weatherData.getTemperature(), weatherData.getHumidity());
+            display();
+        }
     }
 
     private float computeHeatIndex(float t, float rh) {
@@ -28,6 +34,7 @@ public class HeatIndexDisplay implements Observer, DisplayElement {
         return index;
     }
 
+    @Override
     public void display() {
         System.out.println("Heat index is " + heatIndex);
     }

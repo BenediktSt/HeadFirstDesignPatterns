@@ -1,24 +1,30 @@
 package de.designpatterns.section2.observer;
 
 import de.designpatterns.section2.subject.WeatherData;
+import java.util.Observable;
+import java.util.Observer;
 
 public class ForecastDisplay implements Observer, DisplayElement {
+    private Observable observable;
     private float currentPressure = 29.92f;
     private float lastPressure;
-    private WeatherData weatherData;
 
-    public ForecastDisplay(WeatherData weatherData) {
-        this.weatherData = weatherData;
-        weatherData.registerObserver(this);
+    public ForecastDisplay(WeatherData observable) {
+        this.observable = observable;
+        observable.addObserver(this);
     }
 
-    public void update(float temp, float humidity, float pressure) {
-        lastPressure = currentPressure;
-        currentPressure = pressure;
-
-        display();
+    @Override
+    public void update(Observable obs, Object args) {
+        if (obs instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) obs;
+            lastPressure = currentPressure;
+            currentPressure = weatherData.getPressure();
+            display();
+        }
     }
 
+    @Override
     public void display() {
         System.out.print("Forecast: ");
         if (currentPressure > lastPressure) {

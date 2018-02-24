@@ -1,17 +1,19 @@
 package de.designpatterns.section2.observer;
 
-import de.designpatterns.section2.subject.Subject;
+import de.designpatterns.section2.subject.WeatherData;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observable;
+import java.util.Observer;
 
 public class StatisticsDisplay implements Observer, DisplayElement {
     private ArrayList<Float> temperatures;
-    private Subject weatherData;
+    private Observable observable;
 
-    public StatisticsDisplay(Subject weatherData) {
-        this.weatherData = weatherData;
-        weatherData.registerObserver(this);
+    public StatisticsDisplay(Observable observable) {
+        this.observable = observable;
+        observable.addObserver(this);
         temperatures = new ArrayList<>();
     }
 
@@ -25,8 +27,11 @@ public class StatisticsDisplay implements Observer, DisplayElement {
     }
 
     @Override
-    public void update(float temp, float humidity, float pressure) {
-        temperatures.add(temp);
-        display();
+    public void update(Observable obs, Object args) {
+        if (obs instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) obs;
+            temperatures.add(weatherData.getTemperature());
+            display();
+        }
     }
 }
