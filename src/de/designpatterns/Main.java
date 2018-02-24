@@ -1,10 +1,10 @@
 package de.designpatterns;
 
-import de.designpatterns.section1.MiniDucksSimulator;
+import de.designpatterns.section2.WeatherStation;
 
 public class Main {
 
     public static void main(String[] args) {
-        MiniDucksSimulator.run();
+        WeatherStation.run();
     }
 }
