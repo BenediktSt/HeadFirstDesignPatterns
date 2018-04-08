@@ -1,9 +1,15 @@
 package de.designpatterns.section5_command.device;
 
 public class GarageDoor {
-    public void up(){System.out.println("Garage Door is Open");}
-    public void down(){System.out.println("Garage Door is Closed");}
-    public void stop(){System.out.println("Garage Door stopped");}
-    public void lightOn(){System.out.println("Garage Light ist on");}
-    public void lightOff(){System.out.println("Garage Light is off");}
+    private String location;
+
+    public GarageDoor(String location) {
+        this.location = location;
+    }
+
+    public void up(){System.out.println(location + " garage door is open");}
+    public void down(){System.out.println(location + " garage door is closed");}
+    public void stop(){System.out.println(location + " garage door stopped");}
+    public void lightOn(){System.out.println(location + " garage light ist on");}
+    public void lightOff(){System.out.println(location + " garage light is off");}
 }
