@@ -5,11 +5,11 @@ import de.designpatterns.section5_command.device.CeilingFan;
 import de.designpatterns.section5_command.device.GarageDoor;
 import de.designpatterns.section5_command.device.Light;
 import de.designpatterns.section5_command.device.Stereo;
-import de.designpatterns.section5_command.invoker.RemoteControl;
+import de.designpatterns.section5_command.invoker.RemoteControlWithUndo;
 
 public class RemoteLoader {
     public static void main(String[] args) {
-        RemoteControl remoteControl = new RemoteControl();
+        RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
 
         Light livingRoomLight = new Light("Living Room");
         Light kitchenLight = new Light("Kitchen");
@@ -22,7 +22,7 @@ public class RemoteLoader {
         LightOnCommand kitchenRoomLightOn = new LightOnCommand(kitchenLight);
         LightOffCommand kitchenRoomLightOff = new LightOffCommand(kitchenLight);
 
-        CeilingFanOnCommand ceilingFanOn = new CeilingFanOnCommand(ceilingFan);
+        CeilingFanHighCommand ceilingFanOn = new CeilingFanHighCommand(ceilingFan);
         CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
 
         GarageDoorOpenCommand garageDoorOpen = new GarageDoorOpenCommand(garageDoor);
@@ -45,8 +45,11 @@ public class RemoteLoader {
         remoteControl.offButtonWasPushed(1);
         remoteControl.onButtonWasPushed(2);
         remoteControl.offButtonWasPushed(2);
+        remoteControl.undoButtonWasPushed();
         remoteControl.onButtonWasPushed(3);
         remoteControl.offButtonWasPushed(3);
+        remoteControl.onButtonWasPushed(4);
+        remoteControl.undoButtonWasPushed();
         remoteControl.onButtonWasPushed(4);
         remoteControl.offButtonWasPushed(4);
     }
